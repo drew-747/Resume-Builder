@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Production build files
+/web-client/build
+/web-client/dist
+
+# Testing
+/coverage
+
+# Temporary files
+/api-server/uploads/*
+/api-server/temp/*
+/api-server/outputs/*
+!api-server/uploads/.gitkeep
+!api-server/temp/.gitkeep
+!api-server/outputs/.gitkeep
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
