@@ -4,7 +4,6 @@
 
 ![Made with React](https://img.shields.io/badge/Made_with-React-61DAFB?style=for-the-badge&logo=react)
 ![Built with TailwindCSS](https://img.shields.io/badge/Built_with-Tailwind-38B2AC?style=for-the-badge&logo=tailwind-css)
-![Powered by AI](https://img.shields.io/badge/AI_Powered-Latest-blue?style=for-the-badge)
 
 ## Overview
 
@@ -92,14 +91,6 @@ The project uses modern JavaScript features and follows current best practices:
 - Component-based architecture
 - Full dark mode support
 - Modern API integration
-
-## Screenshots
-
-![Light Mode](path/to/light-screenshot.png)
-*Clean, professional interface*
-
-![Dark Mode](path/to/dark-screenshot.png)
-*Eye-friendly dark mode*
 
 ## Contributing
 
