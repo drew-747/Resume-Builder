@@ -102,18 +102,4 @@ We welcome contributions! Here's how you can help:
 4. Push to the branch
 5. Open a Pull Request
 
-## Connect
-
-- [GitHub Issues](https://github.com/yourusername/resume-transformer/issues)
-- [LinkedIn](https://linkedin.com/in/yourusername)
-- [Twitter](https://twitter.com/yourusername)
-
-## License
-
-MIT License - feel free to use this project for your portfolio!
-
----
-
-Made with ❤️ by [Your Name]
-
-*Looking for the perfect tech role? Start with the perfect resume.*
+Made with ❤️ by Leonard
