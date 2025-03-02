@@ -9,7 +9,7 @@ A web application that transforms unprofessional resumes into industry-standard 
 - Transform data into a professional LaTeX-style format
 - Preview and download the transformed resume
 
-## Technology Stack
+## Stack
 
 - **Backend**: Node.js, Express.js
 - **Frontend**: React, Tailwind CSS
