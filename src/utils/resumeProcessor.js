@@ -1,6 +1,7 @@
 import { getDocument } from 'pdfjs-dist/webpack';
 import { jsPDF } from 'jspdf';
 import mammoth from 'mammoth';
+import { GeminiAI } from './geminiAI';
 
 // Set worker source path
 const pdfjsVersion = '4.0.269';
@@ -24,7 +25,24 @@ export class ResumeProcessor {
         throw new Error('No text could be extracted from the file');
       }
 
-      return this.parseResumeContent(text);
+      try {
+        // First attempt: Use Gemini AI to process the resume text
+        const processedData = await GeminiAI.processResume(text);
+        
+        // Second attempt: Enhance the resume data using Gemini AI
+        const enhancedData = await GeminiAI.enhanceResume(processedData);
+        
+        return enhancedData;
+      } catch (aiError) {
+        console.error('AI processing failed, falling back to basic extraction:', aiError);
+        // Fallback to basic extraction if AI processing fails
+        return {
+          contact: await this.extractContactInfo(text),
+          skills: await this.extractSkills(text),
+          education: await this.extractEducation(text),
+          experience: await this.extractExperience(text)
+        };
+      }
     } catch (error) {
       console.error('Error in extractText:', error);
       throw new Error(`Failed to process resume: ${error.message}`);
@@ -40,18 +58,17 @@ export class ResumeProcessor {
       });
 
       const pdf = await loadingTask.promise;
-      let fullText = '';
-
-      for (let i = 1; i <= pdf.numPages; i++) {
-        const page = await pdf.getPage(i);
-        const textContent = await page.getTextContent();
-        const pageText = textContent.items
-          .map(item => item.str)
-          .join(' ');
-        fullText += pageText + '\n';
-      }
-
-      return fullText;
+      const numPages = pdf.numPages;
+      
+      // Process pages in parallel
+      const pagePromises = Array.from({ length: numPages }, (_, i) => 
+        pdf.getPage(i + 1).then(page => page.getTextContent())
+      );
+      
+      const textContents = await Promise.all(pagePromises);
+      return textContents
+        .map(content => content.items.map(item => item.str).join(' '))
+        .join('\n');
     } catch (error) {
       console.error('Error in extractFromPDF:', error);
       throw new Error('Failed to extract text from PDF');
@@ -69,77 +86,60 @@ export class ResumeProcessor {
     }
   }
 
-  static parseResumeContent(text) {
-    try {
-      const sections = {
-        contact: {},
-        education: [],
-        experience: [],
-        skills: []
-      };
-
-      // Extract email
-      const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
-      const emails = text.match(emailRegex);
-      if (emails) {
-        sections.contact.email = emails[0];
-      }
-
-      // Extract phone
-      const phoneRegex = /(\+?1?[-.]?\s*)?(\([0-9]{3}\)|[0-9]{3})[-.]?\s*[0-9]{3}[-.]?\s*[0-9]{4}/g;
-      const phones = text.match(phoneRegex);
-      if (phones) {
-        sections.contact.phone = phones[0];
-      }
-
-      // Extract skills
-      const skillKeywords = [
-        'JavaScript', 'Python', 'Java', 'C++', 'React', 'Node.js', 'Angular',
-        'Vue.js', 'TypeScript', 'HTML', 'CSS', 'SQL', 'MongoDB', 'AWS',
-        'Docker', 'Kubernetes', 'Git', 'REST', 'GraphQL', 'CI/CD',
-        'Agile', 'Scrum', 'Redux', 'Express', 'Spring Boot', 'Ruby',
-        'PHP', 'Swift', 'Kotlin', 'Flutter', 'React Native'
-      ];
-
-      const skillRegex = new RegExp(skillKeywords.join('|'), 'gi');
-      const foundSkills = text.match(skillRegex);
-      if (foundSkills) {
-        sections.skills = [...new Set(foundSkills)];
-      }
-
-      // Extract education
-      const eduKeywords = ['Bachelor', 'Master', 'PhD', 'BSc', 'MSc', 'B.S.', 'M.S.', 'University', 'College', 'Institute'];
-      const lines = text.split(/[\n\r]+/);
-      
-      lines.forEach(line => {
-        const trimmedLine = line.trim();
-        if (eduKeywords.some(keyword => 
-          trimmedLine.includes(keyword) || 
-          trimmedLine.includes(keyword.toUpperCase())
-        )) {
-          if (!sections.education.includes(trimmedLine)) {
-            sections.education.push(trimmedLine);
-          }
-        }
-      });
-
-      // Extract experience (looking for date patterns and common job titles)
-      const datePattern = /\b(19|20)\d{2}\b/;
-      const jobTitles = ['Engineer', 'Developer', 'Architect', 'Manager', 'Lead', 'Consultant'];
-      
-      lines.forEach(line => {
-        const trimmedLine = line.trim();
-        if (datePattern.test(trimmedLine) && 
-            jobTitles.some(title => trimmedLine.includes(title))) {
-          sections.experience.push(trimmedLine);
-        }
-      });
-
-      return sections;
-    } catch (error) {
-      console.error('Error in parseResumeContent:', error);
-      throw new Error('Failed to parse resume content');
+  static async extractContactInfo(text) {
+    const contact = {};
+    
+    // Extract email
+    const emailMatch = text.match(/[\w.-]+@[\w.-]+\.\w+/);
+    if (emailMatch) {
+      contact.email = emailMatch[0];
     }
+
+    // Extract phone
+    const phoneMatch = text.match(/(\+?1?[-.]?\s*)?(\([0-9]{3}\)|[0-9]{3})[-.]?\s*[0-9]{3}[-.]?\s*[0-9]{4}/);
+    if (phoneMatch) {
+      contact.phone = phoneMatch[0];
+    }
+
+    return contact;
+  }
+
+  static async extractSkills(text) {
+    const skillKeywords = [
+      'JavaScript', 'Python', 'Java', 'C++', 'React', 'Node.js', 'Angular',
+      'Vue.js', 'TypeScript', 'HTML', 'CSS', 'SQL', 'MongoDB', 'AWS',
+      'Docker', 'Kubernetes', 'Git', 'REST', 'GraphQL', 'CI/CD',
+      'Agile', 'Scrum', 'Redux', 'Express', 'Spring Boot', 'Ruby',
+      'PHP', 'Swift', 'Kotlin', 'Flutter', 'React Native'
+    ];
+
+    // Create a single regex pattern for all skills
+    const skillPattern = new RegExp(skillKeywords.join('|'), 'gi');
+    const foundSkills = text.match(skillPattern);
+    
+    return foundSkills ? [...new Set(foundSkills)] : [];
+  }
+
+  static async extractEducation(text) {
+    const eduKeywords = ['Bachelor', 'Master', 'PhD', 'BSc', 'MSc', 'B.S.', 'M.S.', 'University', 'College', 'Institute'];
+    const eduPattern = new RegExp(eduKeywords.join('|'), 'i');
+    
+    return text.split(/[\n\r]+/)
+      .filter(line => eduPattern.test(line.trim()))
+      .map(line => line.trim());
+  }
+
+  static async extractExperience(text) {
+    const datePattern = /\b(19|20)\d{2}\b/;
+    const jobTitles = ['Engineer', 'Developer', 'Architect', 'Manager', 'Lead', 'Consultant'];
+    const jobPattern = new RegExp(jobTitles.join('|'), 'i');
+    
+    return text.split(/[\n\r]+/)
+      .filter(line => {
+        const trimmedLine = line.trim();
+        return datePattern.test(trimmedLine) && jobPattern.test(trimmedLine);
+      })
+      .map(line => line.trim());
   }
 
   static async generatePDF(data) {
