@@ -15,7 +15,7 @@ Transform your resume with AI! Upload your resume and let our advanced AI enhanc
 - **Frontend**: React, Tailwind CSS
 - **Animations**: Framer Motion
 - **Icons**: React Icons
-- **AI Integration**: Gemini AI
+- **AI Integration**: Gemini Flash 2.0
 
 ## Installation
 
@@ -60,8 +60,4 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For questions or feedback, please reach out to [Your Name] at [Your Email].
-
----
-
-Made with ❤️ by the Resume Builder Team
+For questions or feedback, please reach out to **angleonard30@gmail.com**
