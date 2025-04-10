@@ -1,95 +1,67 @@
-# Resume Builder - AI-Powered Resume Conversion
+# AI Resume Builder
 
-A modern, high-performance landing page for an AI-powered resume conversion tool. Built with React, Tailwind CSS, and Framer Motion.
+Transform your resume with AI! Upload your resume and let our advanced AI enhance it into an industry-standard format in seconds.
 
 ## Features
 
-- 🎨 Modern, clean design with dark mode support
-- ⚡ High-performance animations with Framer Motion
-- 📱 Fully responsive and mobile-first
-- 🌓 Automatic dark mode detection
-- 🎯 Conversion-optimized layout
-- 🚀 Ready for Product Hunt launch
+- **AI-Powered Analysis**: Extracts and enhances your resume content.
+- **Professional Formatting**: Industry-standard templates for maximum impact.
+- **Instant Results**: Get your enhanced resume in seconds.
+- **Dark Mode**: Seamless transition between light and dark themes.
+- **Responsive Design**: Optimized for all devices.
 
 ## Tech Stack
 
-- React 18
-- Tailwind CSS
-- Framer Motion
-- React Router
-- React Hot Toast
-- React Icons
+- **Frontend**: React, Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: React Icons
+- **AI Integration**: Gemini AI
 
-## Getting Started
+## Installation
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/resume-builder.git
-cd resume-builder
-```
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd Resume-Builder
+   ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-3. Start the development server:
-```bash
-npm run dev
-```
+3. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
 
-4. Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
+4. **Open your browser**:
+   Navigate to `http://localhost:5173`
 
 ## Deployment
 
-### Vercel (Recommended)
-
-1. Install Vercel CLI:
+For production build:
 ```bash
-npm i -g vercel
+npm run build
 ```
 
-2. Deploy:
+Preview the production build locally:
 ```bash
-vercel
+npm run preview
 ```
-
-### Netlify
-
-1. Install Netlify CLI:
-```bash
-npm i -g netlify-cli
-```
-
-2. Deploy:
-```bash
-netlify deploy
-```
-
-## SEO Optimization
-
-The landing page is optimized for:
-- Product Hunt launch
-- YC Demo Day
-- Social sharing
-- Search engines
-
-## Performance
-
-- Optimized images with Next.js Image
-- Lazy loading for animations
-- Minimal JavaScript bundle
-- Efficient CSS with Tailwind
-- Smooth scroll behavior
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please fork the repository and submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+This project is licensed under the MIT License.
+
+## Contact
+
+For questions or feedback, please reach out to [Your Name] at [Your Email].
+
+---
+
+Made with ❤️ by the Resume Builder Team
