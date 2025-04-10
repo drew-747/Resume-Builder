@@ -8,13 +8,12 @@ const Footer = () => {
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white">
               Resume Builder
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Transform your resume with AI-powered technology
+              Transform your resume to Industry Standar
             </p>
             <div className="flex space-x-4">
               <a
