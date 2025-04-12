@@ -1,16 +1,11 @@
-# AI Resume Builder
-
-Transform your resume with AI! Upload your resume and let our advanced AI enhance it into an industry-standard format in seconds.
+# Resume Builder
 
 ## Features
 
-- **AI-Powered Analysis**: Extracts and enhances your resume content.
-- **Professional Formatting**: Industry-standard templates for maximum impact.
-- **Instant Results**: Get your enhanced resume in seconds.
-- **Dark Mode**: Seamless transition between light and dark themes.
-- **Responsive Design**: Optimized for all devices.
+- Extracts and enhances your resume content.
+- Industry-standard templates that are compatible with most ATS software. 
 
-## Tech Stack
+## Stack
 
 - **Frontend**: React, Tailwind CSS
 - **Animations**: Framer Motion
