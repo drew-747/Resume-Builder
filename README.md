@@ -2,7 +2,7 @@
 
 ## Features
 
-- Extracts and enhances your resume content.
+- Extracts and enhances your resume & CV through drag & drop.
 - Industry-standard templates that are compatible with most ATS software. 
 
 ## Stack
