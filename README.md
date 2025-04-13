@@ -3,7 +3,7 @@
 ## Features
 
 - Extracts and enhances your resume & CV through drag & drop.
-- Industry-standard templates that are compatible with most ATS software. 
+- Outputs into LaTeX CV templates that are compatible with most ATS software. 
 
 ## Stack
 
