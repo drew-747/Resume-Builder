@@ -9,8 +9,6 @@
 
 - **Frontend**: React, Tailwind CSS
 - **Animations**: Framer Motion
-- **Icons**: React Icons
-- **AI Integration**: Gemini Flash 2.0
 
 ## Installation
 
@@ -29,9 +27,6 @@
    ```bash
    npm run dev
    ```
-
-4. **Open your browser**:
-   Navigate to `http://localhost:5173`
 
 ## Deployment
 
