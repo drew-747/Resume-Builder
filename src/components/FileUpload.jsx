@@ -46,30 +46,37 @@ const FileUpload = ({ onFileSelect }) => {
     >
       <div
         {...getRootProps()}
-        className={`relative border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-200
+        className={`group relative border-2 border-dashed rounded-3xl p-12 text-center cursor-pointer transition-all duration-300
           ${isDragActive || isDragging 
-            ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/30 dark:border-blue-400' 
-            : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800/50'}`}
+            ? 'border-blue-500 bg-blue-50/30 dark:bg-blue-950/20 dark:border-blue-400 scale-[1.02]' 
+            : 'border-gray-300/50 dark:border-gray-600/50 hover:border-blue-400/70 dark:hover:border-blue-500/70 hover:bg-white/50 dark:hover:bg-gray-800/30 backdrop-blur-lg'}`}
       >
         <input {...getInputProps()} />
-        <div className="space-y-6">
+        
+        {/* Animated Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 to-purple-100/20 dark:from-blue-900/10 dark:to-purple-900/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        <div className="relative space-y-6">
           <motion.div
-            animate={{ scale: isDragActive ? 1.1 : 1 }}
-            transition={{ duration: 0.2 }}
+            animate={{ 
+              scale: isDragActive ? 1.1 : 1,
+              rotate: isDragActive ? 5 : 0
+            }}
+            transition={{ duration: 0.3 }}
             className="flex justify-center"
           >
-            <div className="w-20 h-20 bg-blue-50 dark:bg-blue-950/30 rounded-2xl flex items-center justify-center">
-              <FiUpload className="w-10 h-10 text-blue-500 dark:text-blue-400" />
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-2xl flex items-center justify-center transform group-hover:rotate-6 transition-transform duration-300 shadow-lg">
+              <FiUpload className="w-12 h-12 text-white" />
             </div>
           </motion.div>
-          <div className="space-y-2">
-            <p className="text-xl font-medium text-gray-700 dark:text-gray-200">
+          <div className="space-y-3">
+            <p className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
               {isDragActive ? 'Drop your resume here' : 'Drag & drop your resume here'}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-base text-gray-600 dark:text-gray-400">
               or click to browse files
             </p>
-            <p className="text-xs text-gray-400 dark:text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-500">
               Supported formats: PDF, DOC, DOCX
             </p>
           </div>
@@ -82,18 +89,23 @@ const FileUpload = ({ onFileSelect }) => {
           animate={{ opacity: 1, y: 0 }}
           className="mt-6"
         >
-          <div className="flex items-center justify-between bg-white dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/30 rounded-lg flex items-center justify-center">
-                <FiFile className="w-5 h-5 text-blue-500 dark:text-blue-400" />
+          <div className="flex items-center justify-between bg-white/70 dark:bg-gray-800/30 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-xl flex items-center justify-center shadow-md">
+                <FiFile className="w-6 h-6 text-white" />
               </div>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate max-w-xs">
-                {file.name}
-              </span>
+              <div className="space-y-1">
+                <span className="text-base font-medium text-gray-900 dark:text-white truncate max-w-xs block">
+                  {file.name}
+                </span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  Ready to transform
+                </span>
+              </div>
             </div>
             <button
               onClick={removeFile}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-colors"
             >
               <FiX className="w-5 h-5 text-gray-500 dark:text-gray-400" />
             </button>
