@@ -1,22 +1,22 @@
 import { motion } from 'framer-motion';
-import { FiLoader, FiCheckCircle, FiZap } from 'react-icons/fi';
+import { FiLoader, FiCheckCircle, FiFileText } from 'react-icons/fi';
 
 const ProcessingStatus = ({ status }) => {
   const steps = [
     {
-      icon: <FiZap className="w-5 h-5" />,
-      title: "Analyzing",
-      description: "Extracting key information from your resume"
+      icon: <FiFileText className="w-5 h-5" />,
+      title: "Extracting",
+      description: "Reading your resume content"
     },
     {
       icon: <FiCheckCircle className="w-5 h-5" />,
       title: "Formatting",
-      description: "Applying industry-standard formatting"
+      description: "Applying professional formatting"
     },
     {
       icon: <FiLoader className="w-5 h-5" />,
-      title: "Optimizing",
-      description: "Enhancing for ATS compatibility"
+      title: "Generating",
+      description: "Creating your PDF"
     }
   ];
 

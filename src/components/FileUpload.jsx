@@ -48,8 +48,8 @@ const FileUpload = ({ onFileSelect }) => {
         {...getRootProps()}
         className={`relative border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-200
           ${isDragActive || isDragging 
-            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400' 
-            : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800/50'}`}
+            ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/30 dark:border-blue-400' 
+            : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800/50'}`}
       >
         <input {...getInputProps()} />
         <div className="space-y-6">
@@ -58,7 +58,7 @@ const FileUpload = ({ onFileSelect }) => {
             transition={{ duration: 0.2 }}
             className="flex justify-center"
           >
-            <div className="w-20 h-20 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center">
+            <div className="w-20 h-20 bg-blue-50 dark:bg-blue-950/30 rounded-2xl flex items-center justify-center">
               <FiUpload className="w-10 h-10 text-blue-500 dark:text-blue-400" />
             </div>
           </motion.div>
@@ -82,9 +82,9 @@ const FileUpload = ({ onFileSelect }) => {
           animate={{ opacity: 1, y: 0 }}
           className="mt-6"
         >
-          <div className="flex items-center justify-between bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between bg-white dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-blue-50 dark:bg-blue-950/30 rounded-lg flex items-center justify-center">
                 <FiFile className="w-5 h-5 text-blue-500 dark:text-blue-400" />
               </div>
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate max-w-xs">
