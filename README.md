@@ -1,21 +1,14 @@
-# AI Resume Builder
-
-Transform your resume with AI! Upload your resume and let our advanced AI enhance it into an industry-standard format in seconds.
+# Resume Builder
 
 ## Features
 
-- **AI-Powered Analysis**: Extracts and enhances your resume content.
-- **Professional Formatting**: Industry-standard templates for maximum impact.
-- **Instant Results**: Get your enhanced resume in seconds.
-- **Dark Mode**: Seamless transition between light and dark themes.
-- **Responsive Design**: Optimized for all devices.
+- Extracts and enhances your resume & CV through drag & drop.
+- Outputs into LaTeX CV templates that are compatible with most ATS software. 
 
-## Tech Stack
+## Stack
 
 - **Frontend**: React, Tailwind CSS
 - **Animations**: Framer Motion
-- **Icons**: React Icons
-- **AI Integration**: Gemini Flash 2.0
 
 ## Installation
 
@@ -34,9 +27,6 @@ Transform your resume with AI! Upload your resume and let our advanced AI enhanc
    ```bash
    npm run dev
    ```
-
-4. **Open your browser**:
-   Navigate to `http://localhost:5173`
 
 ## Deployment
 
@@ -57,7 +47,3 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 ## License
 
 This project is licensed under the MIT License.
-
-## Contact
-
-For questions or feedback, please reach out to **angleonard30@gmail.com**
