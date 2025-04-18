@@ -3,9 +3,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import DarkModeToggle from './components/DarkModeToggle';
-import Landing from './pages/Landing';
 import Home from './pages/Home';
-import About from './pages/About';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -27,13 +25,10 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+      <div className="min-h-screen bg-white transition-colors duration-200">
         <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-        <DarkModeToggle isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/builder" element={<Home isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/" element={<Home isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />} />
         </Routes>
         <Toaster 
           position="top-right"

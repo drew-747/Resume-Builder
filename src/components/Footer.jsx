@@ -13,7 +13,7 @@ const Footer = () => {
               Resume Builder
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
-              Transform your resume to Industry Standar
+              Transform your resume to Industry Standard
             </p>
             <div className="flex space-x-4">
               <a

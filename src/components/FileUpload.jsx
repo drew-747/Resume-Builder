@@ -1,23 +1,19 @@
 import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
-import { FiUpload, FiFile, FiX } from 'react-icons/fi';
+import { FiUpload, FiFile } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
 const FileUpload = ({ onFileSelect }) => {
-  const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
       const selectedFile = acceptedFiles[0];
-      if (selectedFile.type !== 'application/pdf' && 
-          selectedFile.type !== 'application/msword' && 
-          selectedFile.type !== 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-        toast.error('Please upload a PDF or Word document');
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        toast.error('File size too large. Please upload a file smaller than 10MB.');
         return;
       }
-      setFile(selectedFile);
       onFileSelect(selectedFile);
     }
   }, [onFileSelect]);
@@ -27,92 +23,95 @@ const FileUpload = ({ onFileSelect }) => {
     accept: {
       'application/pdf': ['.pdf'],
       'application/msword': ['.doc'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx']
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+      'text/plain': ['.txt']
     },
     maxFiles: 1,
     onDragEnter: () => setIsDragging(true),
     onDragLeave: () => setIsDragging(false)
   });
 
-  const removeFile = () => {
-    setFile(null);
-  };
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="w-full"
-    >
-      <div
+    <div className="max-w-3xl mx-auto">
+      <motion.div
         {...getRootProps()}
-        className={`group relative border-2 border-dashed rounded-3xl p-12 text-center cursor-pointer transition-all duration-300
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ scale: 1.02 }}
+        className={`relative overflow-hidden group cursor-pointer transition-all duration-300
           ${isDragActive || isDragging 
-            ? 'border-blue-500 bg-blue-50/30 dark:bg-blue-950/20 dark:border-blue-400 scale-[1.02]' 
-            : 'border-gray-300/50 dark:border-gray-600/50 hover:border-blue-400/70 dark:hover:border-blue-500/70 hover:bg-white/50 dark:hover:bg-gray-800/30 backdrop-blur-lg'}`}
+            ? 'bg-blue-50/80 dark:bg-blue-900/20' 
+            : 'bg-white/80 dark:bg-gray-800/80'} 
+          backdrop-blur-lg rounded-xl p-12 shadow-xl border-2 border-dashed
+          ${isDragActive || isDragging 
+            ? 'border-blue-400 dark:border-blue-500' 
+            : 'border-gray-300 dark:border-gray-600 group-hover:border-blue-300 dark:group-hover:border-blue-500'}`}
       >
         <input {...getInputProps()} />
         
-        {/* Animated Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 to-purple-100/20 dark:from-blue-900/10 dark:to-purple-900/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
+        {/* Animated Background */}
+        <motion.div 
+          className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          initial={false}
+          animate={isDragActive ? { scale: 1.1 } : { scale: 1 }}
+          transition={{ duration: 0.3 }}
+        />
+
         <div className="relative space-y-6">
           <motion.div
-            animate={{ 
+            animate={{
+              y: isDragActive ? -10 : 0,
               scale: isDragActive ? 1.1 : 1,
-              rotate: isDragActive ? 5 : 0
             }}
             transition={{ duration: 0.3 }}
             className="flex justify-center"
           >
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-2xl flex items-center justify-center transform group-hover:rotate-6 transition-transform duration-300 shadow-lg">
-              <FiUpload className="w-12 h-12 text-white" />
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-500 dark:from-blue-400 dark:to-indigo-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:rotate-6 transition-transform duration-300">
+              <FiUpload className="w-10 h-10 text-white" />
             </div>
           </motion.div>
-          <div className="space-y-3">
-            <p className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-              {isDragActive ? 'Drop your resume here' : 'Drag & drop your resume here'}
-            </p>
-            <p className="text-base text-gray-600 dark:text-gray-400">
-              or click to browse files
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-500">
-              Supported formats: PDF, DOC, DOCX
-            </p>
-          </div>
-        </div>
-      </div>
 
-      {file && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-6"
-        >
-          <div className="flex items-center justify-between bg-white/70 dark:bg-gray-800/30 backdrop-blur-xl p-6 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 dark:from-blue-400 dark:to-purple-400 rounded-xl flex items-center justify-center shadow-md">
-                <FiFile className="w-6 h-6 text-white" />
-              </div>
-              <div className="space-y-1">
-                <span className="text-base font-medium text-gray-900 dark:text-white truncate max-w-xs block">
-                  {file.name}
-                </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Ready to transform
-                </span>
-              </div>
-            </div>
-            <button
-              onClick={removeFile}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-colors"
+          <motion.div
+            animate={{
+              y: isDragActive ? -5 : 0,
+              scale: isDragActive ? 1.05 : 1,
+            }}
+            transition={{ duration: 0.3 }}
+            className="space-y-4 text-center"
+          >
+            <motion.p 
+              className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400"
             >
-              <FiX className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-            </button>
-          </div>
-        </motion.div>
-      )}
-    </motion.div>
+              {isDragActive ? 'Drop your resume here' : 'Drop your resume here or click to browse'}
+            </motion.p>
+            <p className="text-gray-500 dark:text-gray-400">
+              Supports PDF, DOC, DOCX, and TXT files
+            </p>
+          </motion.div>
+
+          {/* File Format Icons */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="flex justify-center space-x-4"
+          >
+            {['.PDF', '.DOC', '.DOCX', '.TXT'].map((format, index) => (
+              <motion.div
+                key={format}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index }}
+                className="flex items-center space-x-1 text-sm text-gray-500 dark:text-gray-400"
+              >
+                <FiFile className="w-4 h-4" />
+                <span>{format}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 
